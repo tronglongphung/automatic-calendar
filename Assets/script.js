@@ -1,39 +1,51 @@
 const currentTime = dayjs().format("DD/MM/YYYY");
-
-const formButtons = document.getElementsByTagName("form");
-const hour = document.querySelector(".hour").textContent;
-const currentHour = parseInt(hour);
-console.log(typeof currentHour); //check if its a number
+const $formButtons = $("form");
 
 $("#currentDay").text(`Today is ${currentTime}`);
 
-let time = dayjs().hour();
-const textArea = $("textarea");
-if (time == currentHour) {
-  textArea.addClass("present");
-} else if (time < currentHour) {
-  textArea.addClass("future");
-} else {
-  textArea.addClass("past");
+let currentHour = dayjs().hour();
+const $wrappers = $(".row");
+
+//this changes every textarea, need fix
+$wrappers.each((i, wrapper) => {
+  const hour = parseInt($(wrapper).data("hour"));
+  if (currentHour === hour) {
+    $(wrapper).find("textarea").addClass("present");
+    $(wrapper).find(".hour").text("Current Hour");
+  } else if (currentHour < hour) {
+    $(wrapper).find("textarea").addClass("future");
+  } else {
+    $(wrapper).find("textarea").prop("disabled", true);
+    $(wrapper).find("textarea").addClass("past");
+  }
+});
+
+$formButtons.on("submit", function (event) {
+  event.preventDefault();
+  const hour = $(event.currentTarget).data("hour");
+  const textArea = $(event.currentTarget).find("textarea");
+  localStorage.setItem(hour, textArea.val());
+});
+
+function loadData() {
+  document.querySelector('[data-hour="9"] textarea').value =
+    localStorage.getItem("9");
+  document.querySelector('[data-hour="10"] textarea').value =
+    localStorage.getItem("10");
+  document.querySelector('[data-hour="11"] textarea').value =
+    localStorage.getItem("11");
+  document.querySelector('[data-hour="12"] textarea').value =
+    localStorage.getItem("12");
+  document.querySelector('[data-hour="13"] textarea').value =
+    localStorage.getItem("13");
+  document.querySelector('[data-hour="14"] textarea').value =
+    localStorage.getItem("14");
+  document.querySelector('[data-hour="15"] textarea').value =
+    localStorage.getItem("15");
+  document.querySelector('[data-hour="16"] textarea').value =
+    localStorage.getItem("16");
+  document.querySelector('[data-hour="17"] textarea').value =
+    localStorage.getItem("17");
 }
 
-for (let i = 0; i < formButtons.length; i++) {
-  formButtons[i].addEventListener("submit", function (event) {
-    event.preventDefault();
-    console.log(event);
-    const storeText = {
-      texts: textArea.textContent,
-    };
-    localStorage.setItem("texts", JSON.stringify(storeText));
-
-    renderText();
-  });
-}
-
-const renderText = () => {
-  const textID = $("#text");
-
-  var texts = JSON.parse(localStorage.getItem("texts"));
-
-  textID.textContent = texts;
-};
+loadData();
