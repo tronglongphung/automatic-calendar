@@ -1,4 +1,4 @@
-const currentTime = dayjs().format("DD/MM/YYYY");
+const currentTime = dayjs().format("DD/MM/YYYY, hh:mm");
 const $formButtons = $("form");
 
 $("#currentDay").text(`Today is ${currentTime}`);
@@ -6,7 +6,6 @@ $("#currentDay").text(`Today is ${currentTime}`);
 let currentHour = dayjs().hour();
 const $wrappers = $(".row");
 
-//this changes every textarea, need fix
 $wrappers.each((i, wrapper) => {
   const hour = parseInt($(wrapper).data("hour"));
   if (currentHour === hour) {
