@@ -1,3 +1,6 @@
 # automatic-calendar
 
-[Added current time](./Assets/current-time-image.png)
+[Current time](./Assets/images/current-time-image.png)
+[Display of timetable](./Assets/images/timetable.png)
+
+This app consists of
